@@ -1,0 +1,99 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+div {
+  box-sizing: border-box;
+}
+a,
+a:hover,
+a:active,
+a:visited {
+  text-decoration: none;
+}
+.banner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 104px;
+  border-bottom: 2px solid black;
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 600;
+}
+.banner-text {
+  font-size: 32px;
+}
+
+.page-container {
+  width: 100%;
+  height: 976px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Pretendard", sans-serif;
+}
+
+.page-header {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.form-group label,
+.form-group input {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.login-form {
+  width: 367px;
+  height: 170px;
+  font-weight: 700;
+}
+
+.form-group input {
+  width: 355px;
+  height: 33px;
+  border-radius: 5px;
+  font-weight: 400;
+  border: 1px solid black;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.login-button {
+  display: block;
+  font-family: "Pretendard", sans-serif;
+  border: 0;
+  width: 335px;
+  height: 33px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #aca0eb;
+  margin-top: 10px;
+}
+
+.login-container a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-button {
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-link {
+  margin-top: 15px;
+  color: black;
+  font-weight: 400;
+}
+.helper-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px; /* 텍스트 박스 하단으로 4px 아래 위치 */
+}
