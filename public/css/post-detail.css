@@ -175,6 +175,17 @@ textarea {
   border: 0;
   margin-right: 30px;
 }
+#update-comment-button {
+  background-color: #aca0eb;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  width: 138px;
+  height: 39px;
+  border-radius: 5px;
+  border: 0;
+  margin-right: 30px;
+}
 
 .comment-btn-container {
   text-align: right;
@@ -329,4 +340,9 @@ textarea {
     top: 0;
     opacity: 1;
   }
+}
+
+.post-image {
+  width: 544px;
+  height: 306px;
 }

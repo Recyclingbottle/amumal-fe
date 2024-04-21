@@ -12,19 +12,15 @@
   </head>
   <body>
     <div class="banner-container">
-      <a href="./posts.html">
+      <a href="#" onclick="history.back(); return false;">
         <img
           class="navigate-before-img"
           src="../images/navigate-before.png"
-          alt=""
+          alt="뒤로 가기"
         />
       </a>
       <p class="banner-text">아무 말 대잔치</p>
-      <img
-        src="../images/profile_img.webp"
-        alt="프로필 사진"
-        class="profile-picture"
-      />
+      <img src="" alt="프로필 사진" class="profile-picture" />
     </div>
     <div class="content-container" id="postContainer">
       <div class="post-container">
@@ -49,7 +45,12 @@
             class="img-box"
             style="width: 544px; height: 306px; background-color: #eee"
           >
-            <img src="" alt="" />
+            <img
+              clsss="post-image"
+              src=""
+              alt=""
+              style="width: 544px; height: 306px"
+            />
           </div>
           <p class="post-text">
             무엇을 얘기할까요? 아무말이라면, 삶은 항상 놀라운 모험이라고
@@ -76,6 +77,13 @@
           ></textarea>
           <div class="comments-register-button-container">
             <button class="comments-register-button">댓글 등록</button>
+            <button
+              id="comments-update-button"
+              class="comments-update-button"
+              style="display: none"
+            >
+              수정하기
+            </button>
           </div>
         </div>
         <div class="comment"></div>
