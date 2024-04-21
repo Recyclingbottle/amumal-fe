@@ -1,3 +1,5 @@
+const BASE_URL = "http://localhost:3000";
+
 function validateLoginForm() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
@@ -15,33 +17,45 @@ function validateLoginForm() {
     return true;
   }
 }
+
 document.getElementById("login-button").addEventListener("click", function () {
   if (validateLoginForm()) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    fetch("../data/UserInfo.json")
-      .then((response) => response.json())
-      .then((users) => {
-        const user = users.find((user) => user.email === email);
-        if (!user) {
-          alert("해당 이메일로 등록된 사용자가 없습니다.");
-        } else if (user.password !== password) {
-          alert("비밀번호가 틀립니다.");
-        } else {
-          document.querySelector(".login-button").style.backgroundColor =
-            "#7F6AEE";
-          // 로컬 스토리지에 사용자 정보 저장하기
-          localStorage.setItem("userEmail", user.email);
-          localStorage.setItem("userNickname", user.nickname);
-          localStorage.setItem("userProfileImage", user.profile_image);
-          window.location.href = "./posts.html";
+    fetch(`${BASE_URL}/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Login failed");
         }
+        return response.json();
+      })
+      .then((data) => {
+        localStorage.setItem("auth_token", data.token);
+
+        const decoded = jwt_decode(data.token);
+
+        localStorage.setItem("user_id", decoded.userId);
+        localStorage.setItem("user_email", decoded.email);
+        localStorage.setItem("user_nickname", decoded.nickname);
+        localStorage.setItem("user_profileImage", decoded.profileImage);
+
+        window.location.href = "/posts";
       })
       .catch((error) => {
-        console.error("사용자 정보를 불러오는 중 오류가 발생했습니다:", error);
+        console.error("Error:", error);
       });
   }
+});
+
+document.getElementById("signup-button").addEventListener("click", function () {
+  window.location.href = "/signup"; // 회원가입 페이지로 리디렉션
 });
 
 // 입력 변경 시 유효성 검사

@@ -7,7 +7,9 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css"
     />
-    <link rel="stylesheet" href="../public/css/login.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
     <title>아무 말 대잔치</title>
   </head>
   <body>
@@ -41,9 +43,9 @@
         <button class="login-button" type="button" id="login-button">
           로그인
         </button>
-        <a href="./signup.html" class="signup-link">회원가입</a>
+        <button id="signup-button" class="signup-link">회원가입</button>
       </div>
     </div>
-    <script src="../public/js/login.js"></script>
+    <script src="/js/login.js"></script>
   </body>
 </html>
