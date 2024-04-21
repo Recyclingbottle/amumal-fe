@@ -1,14 +1,18 @@
+const BASE_URL = "http://localhost:3000";
+
 document.addEventListener("DOMContentLoaded", function () {
   const profilePicture = document.querySelector(".profile-picture");
   const menu = document.querySelector(".menu");
   let menuTimeout;
 
-  const userEmail = localStorage.getItem("userEmail");
+  const auth_token = localStorage.getItem("auth_token");
+  const user_id = localStorage.getItem("user_id");
   const userNickname = localStorage.getItem("userNickname");
-  const userProfileImage = localStorage.getItem("userProfileImage");
+  const user_profileImage = localStorage.getItem("user_profileImage");
+  const user_email = localStorage.getItem("user_email");
 
-  if (userProfileImage) {
-    profilePicture.src = `../images/${userProfileImage}`;
+  if (user_profileImage) {
+    profilePicture.src = `${BASE_URL}/images/profile/${user_profileImage}`;
   }
 
   profilePicture.addEventListener("mouseenter", function () {
@@ -29,14 +33,24 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isLoading) return;
     isLoading = true;
 
-    fetch(`../data/Posts.json`)
+    // 서버에서 데이터를 가져오는 fetch 요청
+    fetch(`${BASE_URL}/posts`, {
+      method: "GET", // HTTP GET 요청
+      headers: {
+        // Bearer 토큰을 사용한 인증 헤더
+        Authorization: `Bearer ${auth_token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
-        data.posts.forEach((post) => createPostElement(post));
+        data.forEach((post) => createPostElement(post));
         page++;
         isLoading = false;
       })
-      .catch((error) => console.error("Error loading posts:", error));
+      .catch((error) => {
+        console.error("Error loading posts:", error);
+        isLoading = false;
+      });
   }
 
   window.addEventListener("scroll", () => {
@@ -62,7 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
           <time class="post-date">${new Date(post.date).toLocaleString()}</time>
         </div>
         <div class="author-info">
-          <img src="../images/${post.author.profileImage}" alt="${
+          <img src="${BASE_URL}/images/profile/${
+      post.author.profileImage_path
+    }" alt="${
       post.author.nickname
     }의 프로필 이미지" class="author-profile-picture">
           <span class="author-name">${post.author.nickname}</span>
@@ -70,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
 
     postDiv.addEventListener("click", () => {
-      location.href = "./post-detail.html?postId=" + post.id;
+      location.href = `/posts/${post.id}`;
     });
 
     document.getElementById("postsContainer").appendChild(postDiv);

@@ -8,21 +8,18 @@
       href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css"
     />
     <link rel="stylesheet" href="../css/posts.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <title>게시판</title>
   </head>
   <body>
     <div class="banner-container">
       <p class="banner-text">아무말 대잔치</p>
       <div class="profile-hover">
-        <img
-          src="../images/profile_img.webp"
-          alt="프로필 사진"
-          class="profile-picture"
-        />
+        <img alt="프로필 사진" class="profile-picture" />
         <div class="menu" style="display: none">
-          <a href="edit-profile.html">회원정보수정</a>
-          <a href="change-password.html">비밀번호수정</a>
-          <a href="index.html">로그아웃</a>
+          <a href="/profile/edit">회원정보수정</a>
+          <a href="/password/change">비밀번호수정</a>
+          <a href="/">로그아웃</a>
         </div>
       </div>
     </div>
@@ -35,7 +32,7 @@
           <div class="button-right-align">
             <button
               class="post-create-btn"
-              onclick="window.location.href='./create-post.html'"
+              onclick="window.location.href='/posts/new'"
             >
               게시글 작성
             </button>
