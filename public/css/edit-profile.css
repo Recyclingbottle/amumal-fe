@@ -146,10 +146,6 @@ a:visited {
   justify-content: center;
 }
 .profile-add-img {
-  width: 149px;
-  height: 149px;
-  border-radius: 100%;
-  background-color: #eee;
   display: flex;
   align-items: center;
   justify-content: center;

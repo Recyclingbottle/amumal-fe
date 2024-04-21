@@ -14,15 +14,11 @@
     <div class="banner-container">
       <p class="banner-text">아무말 대잔치</p>
       <div class="profile-hover">
-        <img
-          src="../images/profile_img.webp"
-          alt="프로필 사진"
-          class="profile-picture"
-        />
-        <div class="menu">
-          <a href="edit-profile.html">회원정보수정</a>
-          <a href="change-password.html">비밀번호수정</a>
-          <a href="index.html">로그아웃</a>
+        <img src="" alt="프로필 사진" class="profile-picture" />
+        <div class="menu" style="display: none">
+          <a href="/profile/edit">회원정보수정</a>
+          <a href="/password/change">비밀번호수정</a>
+          <a href="/">로그아웃</a>
         </div>
       </div>
     </div>
@@ -68,14 +64,14 @@
           <input type="checkbox" id="modal-toggle" hidden />
         </div>
         <div class="back-btn-box">
-          <button class="back-btn" id="back-btn">수정완료</button>
+          <button class="back-btn" id="back-btn" onclick="history.back();">
+            수정완료
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- The Modal -->
     <div id="myModal" class="modal" style="display: none">
-      <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">
           <h2>회원탈퇴 하시겠습니까?</h2>
