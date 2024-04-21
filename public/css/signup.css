@@ -115,9 +115,7 @@ a:visited {
 
 .a-container {
   width: 367px;
-  display: block;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
 .helper-text {

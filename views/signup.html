@@ -8,17 +8,17 @@
       href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css"
     />
     <link rel="stylesheet" href="../css/signup.css" />
-    <script src="../js/SignUp.js"></script>
+
     <title>회원 가입</title>
   </head>
   <body>
     <div class="banner-container">
-      <a href="./index.html"
-        ><img
-          class="navigate-before-img"
-          src="../images/navigate-before.png"
-          alt=""
-      /></a>
+      <img
+        id="navigate-back-img"
+        class="navigate-before-img"
+        src="../images/navigate-before.png"
+        alt="이전 페이지로"
+      />
       <p class="banner-text">아무 말 대잔치</p>
     </div>
     <div class="page-container">
@@ -89,20 +89,20 @@
             />
             <p class="helper-text" id="nickname-helper">*helper text</p>
           </div>
+          <button
+            class="signup-button"
+            id="signup-button"
+            type="button"
+            style="margin-top: 10px"
+          >
+            회원가입
+          </button>
         </form>
         <div class="a-container">
-          <a href="./index.html"
-            ><button
-              class="signup-button"
-              type="button"
-              style="margin-top: 10px"
-            >
-              회원가입
-            </button></a
-          >
-          <a href="./index.html" class="go-to-login">로그인하러 가기</a>
+          <p class="go-to-login">로그인하러 가기</p>
         </div>
       </div>
     </div>
+    <script src="../js/signup.js"></script>
   </body>
 </html>
