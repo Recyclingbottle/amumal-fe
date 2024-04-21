@@ -6,6 +6,19 @@ document.addEventListener("DOMContentLoaded", function () {
     "confirm-password-helper"
   );
   const button = document.querySelector(".signup-butoton");
+  const userId = localStorage.getItem("user_id");
+  const token = localStorage.getItem("auth_token");
+
+  // Add real-time validation listeners
+  passwordInput.addEventListener("input", function () {
+    validatePassword();
+    updateButtonState();
+  });
+
+  confirmPasswordInput.addEventListener("input", function () {
+    validatePassword();
+    updateButtonState();
+  });
 
   function validatePassword() {
     const password = passwordInput.value;
@@ -26,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (!confirmPassword) {
-      confirmPasswordHelper.textContent = "비밀번호를 한번 더 입력해주세요";
+      confirmPasswordHelper.textContent = "*비밀번호를 한번 더 입력해주세요";
       return false;
     } else if (password !== confirmPassword) {
       confirmPasswordHelper.textContent = "*비밀번호 확인과 다릅니다.";
@@ -35,16 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return true;
   }
-
-  passwordInput.addEventListener("input", function () {
-    validatePassword();
-    updateButtonState();
-  });
-
-  confirmPasswordInput.addEventListener("input", function () {
-    validatePassword();
-    updateButtonState();
-  });
 
   function updateButtonState() {
     if (validatePassword()) {
@@ -55,6 +58,41 @@ document.addEventListener("DOMContentLoaded", function () {
       button.style.backgroundColor = "#ACA0EB";
     }
   }
+
+  button.addEventListener("click", function () {
+    if (!validatePassword()) {
+      alert("비밀번호 유효성 검사를 통과하지 못했습니다.");
+      return;
+    }
+
+    const newPassword = passwordInput.value;
+
+    fetch(`http://localhost:3000/users/${userId}/password`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ new_password: newPassword }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("비밀번호가 성공적으로 변경되었습니다.");
+          window.location.href = "/";
+        } else {
+          alert("비밀번호 변경에 실패했습니다.");
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (data && data.message) {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("비밀번호 변경 중 오류 발생:", error);
+      });
+  });
 
   updateButtonState();
 });
