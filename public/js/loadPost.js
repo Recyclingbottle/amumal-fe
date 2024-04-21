@@ -56,9 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .closest(".comment-container")
         .querySelector(".comment-text").textContent;
       commentTextarea.value = commentContent;
-      commentButton.style.display = "none"; // Hide the register button
+      commentButton.style.display = "none";
       const updateButton = document.querySelector("#update-comment-button");
-      updateButton.style.display = "block"; // Show the update button
+      updateButton.style.display = "block";
       updateButton.setAttribute("data-comment-id", commentId);
     }
   });

@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const userId = localStorage.getItem("user_id");
   const token = localStorage.getItem("auth_token");
 
-  // Add real-time validation listeners
   passwordInput.addEventListener("input", function () {
     validatePassword();
     updateButtonState();

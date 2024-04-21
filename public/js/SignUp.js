@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(signupResult);
     if (signupResult.success) {
       alert("회원 가입이 완료되었습니다.");
-      window.location.href = "/"; // 회원가입 성공 후 로그인 페이지로 리디렉션
+      window.location.href = "/"; // 회원가입 성공 후 로그인 페이지로
     } else {
       alert("회원가입 실패: " + signupResult.message);
     }
