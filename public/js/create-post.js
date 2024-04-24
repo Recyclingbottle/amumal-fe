@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("post-form");
   const titleInput = document.getElementById("post-title");
   const contentTextarea = document.getElementById("post-content");
@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("auth_token"); // Bearer Token 가져오기
   const profileImagePath = localStorage.getItem("user_profileImage");
   profilePicture.src = `http://localhost:3000/images/profile/${profileImagePath}`;
-  function updateUI() {
+
+  const updateUI = () => {
     const title = titleInput.value;
     const content = contentTextarea.value;
     const bothFilled = title && content;
@@ -20,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
     helperText.textContent = bothFilled
       ? ""
       : "*제목, 내용을 모두 작성해주세요";
-  }
+  };
 
-  function uploadImage(file) {
+  const uploadImage = (file) => {
     const formData = new FormData();
     formData.append("image", file);
 
@@ -39,9 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Image upload failed:", error);
         throw error;
       });
-  }
+  };
 
-  function submitPost(title, content, filename) {
+  const submitPost = (title, content, filename) => {
     const author = {
       email: localStorage.getItem("user_email"),
       nickname: localStorage.getItem("user_nickname"),
@@ -78,9 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
         helperText.textContent =
           "*게시글 작성에 실패했습니다. 다시 시도해주세요.";
       });
-  }
+  };
 
-  titleInput.addEventListener("input", function () {
+  titleInput.addEventListener("input", () => {
     if (titleInput.value.length > 26) {
       titleInput.value = titleInput.value.substr(0, 26);
     }
@@ -89,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   contentTextarea.addEventListener("input", updateUI);
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
     updateUI();
 
@@ -104,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
             helperText.textContent = "*이미지 업로드 실패. 다시 시도해주세요.";
           });
       } else {
-        submitPost(titleInput.value, contentTextarea.value, ""); // 이미지 없이 게시글 작성
+        submitPost(titleInput.value, contentTextarea.value, "");
       }
     } else {
       helperText.textContent = "*제목, 내용을 모두 작성해주세요";

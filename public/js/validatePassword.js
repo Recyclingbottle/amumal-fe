@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+  // 화살표 함수로 변경
   const passwordInput = document.getElementById("password");
   const confirmPasswordInput = document.getElementById("confirm-password");
   const passwordHelper = document.getElementById("password-helper");
@@ -9,17 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const userId = localStorage.getItem("user_id");
   const token = localStorage.getItem("auth_token");
 
-  passwordInput.addEventListener("input", function () {
+  passwordInput.addEventListener("input", () => {
+    // 화살표 함수로 변경
     validatePassword();
     updateButtonState();
   });
 
-  confirmPasswordInput.addEventListener("input", function () {
+  confirmPasswordInput.addEventListener("input", () => {
+    // 화살표 함수로 변경
     validatePassword();
     updateButtonState();
   });
 
-  function validatePassword() {
+  const validatePassword = () => {
+    // 화살표 함수로 변경
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
     const regex =
@@ -46,9 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     return true;
-  }
+  };
 
-  function updateButtonState() {
+  const updateButtonState = () => {
+    // 화살표 함수로 변경
     if (validatePassword()) {
       button.disabled = false;
       button.style.backgroundColor = "#7F6AEE";
@@ -56,9 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
       button.disabled = true;
       button.style.backgroundColor = "#ACA0EB";
     }
-  }
+  };
 
-  button.addEventListener("click", function () {
+  button.addEventListener("click", () => {
+    // 화살표 함수로 변경
     if (!validatePassword()) {
       alert("비밀번호 유효성 검사를 통과하지 못했습니다.");
       return;

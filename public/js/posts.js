@@ -1,6 +1,7 @@
 const BASE_URL = "http://localhost:3000";
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+  // 화살표 함수로 변경
   const profilePicture = document.querySelector(".profile-picture");
   const menu = document.querySelector(".menu");
   let menuTimeout;
@@ -15,13 +16,16 @@ document.addEventListener("DOMContentLoaded", function () {
     profilePicture.src = `${BASE_URL}/images/profile/${user_profileImage}`;
   }
 
-  profilePicture.addEventListener("mouseenter", function () {
+  profilePicture.addEventListener("mouseenter", () => {
+    // 화살표 함수로 변경
     clearTimeout(menuTimeout);
     menu.style.display = "block";
   });
 
-  profilePicture.addEventListener("mouseleave", function () {
-    menuTimeout = setTimeout(function () {
+  profilePicture.addEventListener("mouseleave", () => {
+    // 화살표 함수로 변경
+    menuTimeout = setTimeout(() => {
+      // 화살표 함수로 변경
       menu.style.display = "none";
     }, 3000);
   });
@@ -29,15 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
   let isLoading = false;
   let page = 0;
 
-  function fetchPosts() {
+  const fetchPosts = () => {
+    // 화살표 함수로 변경
     if (isLoading) return;
     isLoading = true;
 
-    // 서버에서 데이터를 가져오는 fetch 요청
     fetch(`${BASE_URL}/posts`, {
-      method: "GET", // HTTP GET 요청
+      method: "GET",
       headers: {
-        // Bearer 토큰을 사용한 인증 헤더
         Authorization: `Bearer ${auth_token}`,
       },
     })
@@ -51,9 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error loading posts:", error);
         isLoading = false;
       });
-  }
+  };
 
   window.addEventListener("scroll", () => {
+    // 화살표 함수로 변경
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 5 && !isLoading) {
       fetchPosts();
@@ -62,7 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fetchPosts();
 
-  function createPostElement(post) {
+  const createPostElement = (post) => {
+    // 화살표 함수로 변경
     const postDiv = document.createElement("div");
     postDiv.className = "post";
     postDiv.innerHTML = `
@@ -83,19 +88,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }의 프로필 이미지" class="author-profile-picture">
           <span class="author-name">${post.author.nickname}</span>
         </div>
-      `;
+    `;
 
     postDiv.addEventListener("click", () => {
+      // 화살표 함수로 변경
       location.href = `/posts/${post.id}`;
     });
 
     document.getElementById("postsContainer").appendChild(postDiv);
-  }
+  };
 
-  function formatCount(num) {
-    if (num >= 100000) return (num / 1000).toFixed(0) + "k";
-    if (num >= 10000) return (num / 1000).toFixed(0) + "k";
-    if (num >= 1000) return (num / 1000).toFixed(0) + "k";
+  const formatCount = (num) => {
+    // 화살표 함수로 변경
+    if (num >= 100000) return `${(num / 1000).toFixed(0)}k`;
+    if (num >= 10000) return `${(num / 1000).toFixed(0)}k`;
+    if (num >= 1000) return `${(num / 1000).toFixed(0)}k`;
     return num;
-  }
+  };
 });

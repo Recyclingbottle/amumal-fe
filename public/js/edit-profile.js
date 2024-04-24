@@ -1,10 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+  // 화살표 함수로 변경
   const token = localStorage.getItem("auth_token");
   const profileImg = document.getElementById("profileImg");
   const helperText = document.getElementById("helper-text");
   const nicknameInput = document.getElementById("nickname");
   const updateButton = document.querySelector(".signup-butoton");
-  const userId = localStorage.getItem("user_id"); // 사용자 ID를 로컬스토리지에서 가져옴
+  const userId = localStorage.getItem("user_id");
   const user_profileImage = localStorage.getItem("user_profileImage");
   const userEmail = localStorage.getItem("user_email");
   document.querySelector("#email").innerText = userEmail;
@@ -14,18 +15,21 @@ document.addEventListener("DOMContentLoaded", function () {
   profileImg.src = `http://localhost:3000/images/profile/${user_profileImage}`;
   nicknameInput.addEventListener("input", validateNickname);
 
-  profileImg.addEventListener("click", function () {
+  profileImg.addEventListener("click", () => {
+    // 화살표 함수로 변경
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
-    fileInput.onchange = function (e) {
+    fileInput.onchange = (e) => {
+      // 화살표 함수로 변경
       const file = e.target.files[0];
       uploadProfileImage(file);
     };
     fileInput.click();
   });
 
-  updateButton.addEventListener("click", function () {
+  updateButton.addEventListener("click", () => {
+    // 화살표 함수로 변경
     submitProfileUpdate();
   });
 
@@ -95,19 +99,17 @@ document.addEventListener("DOMContentLoaded", function () {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return response.json().then((data) => {
+      .then((response) =>
+        response.json().then((data) => {
+          // Promises chain 정리
+          if (response.ok) {
+            helperText.textContent = data.message;
+            updateButton.disabled = false;
+          } else {
             throw new Error(data.message);
-          });
-        }
-      })
-      .then((data) => {
-        helperText.textContent = data.message;
-        updateButton.disabled = false;
-      })
+          }
+        })
+      )
       .catch((error) => {
         helperText.textContent = error.message;
         updateButton.disabled = true;
@@ -119,34 +121,37 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalConfirmButton = modal.querySelector(".confirm");
 
   // 모달 열기
-  modalOpenLink.addEventListener("click", function (event) {
+  modalOpenLink.addEventListener("click", (event) => {
+    // 화살표 함수로 변경
     event.preventDefault(); // 기본 동작 방지
     modal.style.display = "block";
   });
 
   // 모달 닫기
-  modalCloseButton.addEventListener("click", function () {
+  modalCloseButton.addEventListener("click", () => {
+    // 화살표 함수로 변경
     modal.style.display = "none";
   });
 
   // 모달 내 '확인' 버튼 클릭 이벤트
-  modalConfirmButton.addEventListener("click", function () {
+  modalConfirmButton.addEventListener("click", () => {
+    // 화살표 함수로 변경
     deleteUserAccount();
   });
 
   function deleteUserAccount() {
-    const userId = localStorage.getItem("user_id"); // 사용자 ID 가져오기
+    const userId = localStorage.getItem("user_id");
     fetch(`http://localhost:3000/users/${userId}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
         if (response.ok) {
           alert("회원 탈퇴가 완료되었습니다.");
-          localStorage.clear(); // 로컬 스토리지 클리어
-          window.location.href = "/"; // 홈으로 리다이렉트
+          localStorage.clear();
+          window.location.href = "/";
         } else {
           alert("회원 탈퇴에 실패했습니다.");
         }
@@ -156,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
         alert("네트워크 오류로 회원 탈퇴를 진행할 수 없습니다.");
       })
       .finally(() => {
-        modal.style.display = "none"; // 모달 닫기
+        modal.style.display = "none";
       });
   }
 });

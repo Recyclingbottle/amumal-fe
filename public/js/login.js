@@ -1,9 +1,10 @@
 const BASE_URL = "http://localhost:3000";
 
-function validateLoginForm() {
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
-  let helperText = document.getElementById("login-helper");
+const validateLoginForm = () => {
+  // 화살표 함수로 변경
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const helperText = document.getElementById("login-helper");
 
   // 이메일과 비밀번호의 기본 유효성 검사
   if (email.length === 0 || !email.includes("@")) {
@@ -16,9 +17,10 @@ function validateLoginForm() {
     helperText.innerText = "";
     return true;
   }
-}
+};
 
-document.getElementById("login-button").addEventListener("click", function () {
+document.getElementById("login-button").addEventListener("click", () => {
+  // 화살표 함수로 변경
   if (validateLoginForm()) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -39,7 +41,7 @@ document.getElementById("login-button").addEventListener("click", function () {
       .then((data) => {
         localStorage.setItem("auth_token", data.token);
 
-        const decoded = jwt_decode(data.token);
+        const decoded = jwt_decode(data.token); // jwt_decode 사용을 위해 해당 라이브러리의 import 필요
 
         localStorage.setItem("user_id", decoded.userId);
         localStorage.setItem("user_email", decoded.email);
@@ -54,7 +56,8 @@ document.getElementById("login-button").addEventListener("click", function () {
   }
 });
 
-document.getElementById("signup-button").addEventListener("click", function () {
+document.getElementById("signup-button").addEventListener("click", () => {
+  // 화살표 함수로 변경
   window.location.href = "/signup"; // 회원가입 페이지로 리디렉션
 });
 
