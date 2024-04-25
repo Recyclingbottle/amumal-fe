@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 document.addEventListener("DOMContentLoaded", function () {
+=======
+document.addEventListener("DOMContentLoaded", () => {
+  // 함수를 화살표 함수로 변경
+>>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
   // 초기 설정: 토큰 및 사용자 프로필 이미지 불러오기
   const token = localStorage.getItem("auth_token");
   const login_profile = localStorage.getItem("user_profileImage");
@@ -17,13 +22,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const updateButton = document.createElement("button");
     updateButton.textContent = "수정하기";
     updateButton.id = "update-comment-button";
-    updateButton.style.display = "none"; // Initially hidden
+    updateButton.style.display = "none"; // 초기에는 숨김
     commentButtonContainer.appendChild(updateButton);
 
     // 댓글 수정 이벤트 리스너
-    updateButton.addEventListener("click", function () {
+    updateButton.addEventListener("click", () => {
+      // 함수를 화살표 함수로 변경
       const commentId = updateButton.getAttribute("data-comment-id");
-      console.log("Updating comment with ID:", commentId); // 로그 추가하여 commentId 확인
+      console.log("Updating comment with ID:", commentId); // commentId 확인을 위한 로그 추가
       const updatedContent = commentTextarea.value.trim();
       if (updatedContent) {
         fetch(`${BASE_URL}/posts/${postId}/comments/${commentId}`, {
@@ -53,7 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // 댓글 수정 버튼 설정
-  document.addEventListener("click", function (event) {
+  document.addEventListener("click", (event) => {
+    // 함수를 화살표 함수로 변경
     const editButton = event.target.closest(".edit-comment-btn");
     if (editButton) {
       const commentId = editButton.dataset.commentId;
@@ -67,14 +74,18 @@ document.addEventListener("DOMContentLoaded", function () {
       updateButton.setAttribute("data-comment-id", commentId);
     }
   });
+
   // 현재 페이지의 게시글 ID 추출
   const postId = window.location.pathname.split("/").pop();
+
   // 댓글 등록 버튼 이벤트 리스너 설정
   setupCommentPosting(postId, token);
+
   // 게시글 수정 페이지로 리다이렉션하는 이벤트 리스너
   const editButton = document.querySelector(".edit-post-btn");
   editButton &&
-    editButton.addEventListener("click", function () {
+    editButton.addEventListener("click", () => {
+      // 함수를 화살표 함수로 변경
       window.location.href = `/posts/${postId}/edit`;
     });
 
@@ -136,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
     commentsContainer.innerHTML = comments
       .map(
         (comment) => `
+<<<<<<< HEAD
     <div class="comment-container">
       <img src="${BASE_URL}/images/profile/${comment.author.profileImage}" alt="댓글 작성자 프로필 사진" class="comment-profile-picture">
       <div class="comment-content">
@@ -145,14 +157,25 @@ document.addEventListener("DOMContentLoaded", function () {
           <div class="comment-btn-container">
             <button class="edit-comment-btn" data-comment-id="${comment.id}">수정</button>
             <button class="delete-comment-btn" data-comment-id="${comment.id}">삭제</button>
+=======
+        <div class="comment-container">
+          <img src="http://localhost:3000/images/profile/${comment.author.profileImage}" alt="댓글 작성자 프로필 사진" class="comment-profile-picture">
+          <div class="comment-content">
+            <div class="comment-top-row">
+              <span class="comment-author-name">${comment.author.nickname}</span>
+              <span class="comment-date">${comment.date}</span>
+              <div class="comment-btn-container">
+                <button class="edit-comment-btn" data-comment-id="${comment.id}">수정</button>
+                <button class="delete-comment-btn" data-comment-id="${comment.id}">삭제</button>
+              </div>
+            </div>
+            <div class="comment-text-container">
+              <p class="comment-text">${comment.content}</p>
+            </div>
+>>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
           </div>
         </div>
-        <div class="comment-text-container">
-          <p class="comment-text">${comment.content}</p>
-        </div>
-      </div>
-    </div>
-  `
+      `
       )
       .join("");
   }
@@ -174,7 +197,8 @@ function setupCommentPosting(postId, token) {
   const commentButton = document.querySelector(".comments-register-button");
   const commentTextarea = document.querySelector(".comment-textarea");
 
-  commentButton.addEventListener("click", function () {
+  commentButton.addEventListener("click", () => {
+    // 화살표 함수로 변경
     const commentContent = commentTextarea.value.trim();
     if (commentContent) {
       fetch(`${BASE_URL}/posts/${postId}/comments`, {
@@ -209,18 +233,22 @@ function setupCommentPosting(postId, token) {
     }
   });
 }
+
 // 게시글 삭제 모달 관련 이벤트 리스너 설정
 function setupPostDeletionModal(postId, token) {
   const postDeletionModal = document.getElementById("postDeletionModal");
-  document
-    .querySelector(".delete-post-btn")
-    .addEventListener(
-      "click",
-      () => (postDeletionModal.style.display = "block")
-    );
+  document.querySelector(".delete-post-btn").addEventListener("click", () => {
+    // 화살표 함수로 변경
+    postDeletionModal.style.display = "block";
+  });
 
   postDeletionModal.querySelector(".confirm").addEventListener("click", () => {
+<<<<<<< HEAD
     fetch(`${BASE_URL}/posts/${postId}`, {
+=======
+    // 화살표 함수로 변경
+    fetch(`http://localhost:3000/posts/${postId}`, {
+>>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
       method: "DELETE",
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -230,9 +258,11 @@ function setupPostDeletionModal(postId, token) {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      response.ok
-        ? (window.location.href = "/posts")
-        : alert("게시글을 삭제할 수 없습니다.");
+      if (response.ok) {
+        window.location.href = "/posts";
+      } else {
+        alert("게시글을 삭제할 수 없습니다.");
+      }
     });
     postDeletionModal.style.display = "none";
   });
@@ -242,6 +272,7 @@ function setupPostDeletionModal(postId, token) {
 function setupCommentDeletionModal() {
   const commentDeletionModal = document.getElementById("commentDeletionModal");
   document.addEventListener("click", (event) => {
+    // 화살표 함수로 변경
     const deleteButton = event.target.closest(".delete-comment-btn");
     if (deleteButton) {
       const commentId = deleteButton.dataset.commentId;
@@ -250,6 +281,7 @@ function setupCommentDeletionModal() {
         commentId;
     }
   });
+
   const token = localStorage.getItem("auth_token");
   commentDeletionModal
     .querySelector(".confirm")
@@ -266,7 +298,11 @@ function setupCommentDeletionModal() {
           Authorization: `Bearer ${token}`,
         },
       }).then((response) => {
-        response.ok ? location.reload() : alert("댓글을 삭제할 수 없습니다.");
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert("댓글을 삭제할 수 없습니다.");
+        }
       });
       commentDeletionModal.style.display = "none";
     });

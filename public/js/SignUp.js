@@ -1,13 +1,18 @@
+<<<<<<< HEAD
 const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 document.addEventListener("DOMContentLoaded", function () {
   // 이전 페이지로 돌아가기 위한 이미지에 클릭 이벤트 연결
+=======
+document.addEventListener("DOMContentLoaded", () => {
+  // 화살표 함수로 변경
+>>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
   const navigateBackImg = document.getElementById("navigate-back-img");
-  navigateBackImg.addEventListener("click", function () {
+  navigateBackImg.addEventListener("click", () => {
+    // 화살표 함수로 변경
     window.history.back();
   });
   let uploadedFileName = "";
-  // 입력 요소와 버튼에 대한 참조
   const formElements = {
     email: document.getElementById("email"),
     password: document.getElementById("password"),
@@ -19,13 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // 유효성 검사 결과 업데이트
-  function updateHelperText(element, message) {
-    const helperElement = document.getElementById(element.id + "-helper");
+  const updateHelperText = (element, message) => {
+    // 화살표 함수로 변경
+    const helperElement = document.getElementById(`${element.id}-helper`);
     helperElement.textContent = message;
-  }
+  };
 
   // 입력 필드 유효성 검사
-  async function validateField(field) {
+  const validateField = async (field) => {
+    // 화살표 함수와 async 사용
     let validationResult = "";
     switch (field.id) {
       case "email":
@@ -51,26 +58,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     updateHelperText(field, validationResult);
     return validationResult;
-  }
+  };
 
-  // 이메일 유효성 검사 함수 (비동기 처리)
-  async function validateEmail(email) {
+  // 이메일 유효성 검사 함수
+  const validateEmail = async (email) => {
+    // 화살표 함수와 async 사용
     if (!email) return "*이메일을 입력해주세요.";
     if (email.length < 5 || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
       return "*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
     }
     try {
+<<<<<<< HEAD
       const message = await checkEmailAvailability(email); // 비동기 결과를 기다림
 
       return message; // 결과 메시지 반환
+=======
+      const response = await fetch(
+        `${BASE_URL}/users/check-email?email=${encodeURIComponent(email)}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      return data.message;
+>>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
     } catch (error) {
       console.error("Validation error:", error);
-      return "*이메일 검사 중 문제가 발생했습니다."; // 오류 처리
+      return "*이메일 검사 중 문제가 발생했습니다.";
     }
-  }
+  };
 
   // 비밀번호 유효성 검사
-  function validatePassword(password) {
+  const validatePassword = (password) => {
+    // 화살표 함수로 변경
     if (!password) return "*비밀번호를 입력해주세요";
     if (
       password.length < 8 ||
@@ -81,24 +101,39 @@ document.addEventListener("DOMContentLoaded", function () {
     )
       return "*비밀번호는 8자 이상, 20자 이하이며, 문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.";
     return "";
-  }
+  };
 
-  // 닉네임 유효성 검사 및 중복 확인
-  async function validateNickname(nickname) {
+  const validateNickname = async (nickname) => {
+    // 화살표 함수와 async 사용
     if (!nickname) return "*닉네임을 입력해주세요.";
     if (/\s/.test(nickname)) return "*띄어쓰기를 없애주세요";
     if (nickname.length > 10) return "*닉네임은 최대 10자까지 작성 가능합니다.";
-    return await checkNicknameAvailability(nickname);
-  }
+    try {
+      const response = await fetch(
+        `${BASE_URL}/users/check-nickname?nickname=${encodeURIComponent(
+          nickname
+        )}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      return data.message;
+    } catch (error) {
+      console.error("Error checking nickname:", error);
+      return "닉네임 검사 중 오류가 발생했습니다.";
+    }
+  };
 
   // 이미지 파일 업로드 처리
-  function handleFileUpload(event) {
+  const handleFileUpload = (event) => {
+    // 화살표 함수로 변경
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
+        // 화살표 함수와 async 사용
         formElements.imgPreview.src = e.target.result;
-        applyStylesToImagePreview(formElements.imgPreview);
         try {
           uploadedFileName = await uploadImage(file);
         } catch (error) {
@@ -107,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
       reader.readAsDataURL(file);
     }
-  }
+  };
 
   // 이미지 서버에 업로드
   function uploadImage(file) {
@@ -138,8 +173,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // 회원가입 데이터 전송
-  function registerUser(email, password, nickname, profileImagePath) {
-    // 회원가입을 위한 사용자 데이터 객체 생성
+  const registerUser = async (email, password, nickname, profileImagePath) => {
+    // 화살표 함수와 async 사용
     const userData = {
       email: email,
       password: password,
@@ -147,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
       profile_image: profileImagePath,
     };
 
+<<<<<<< HEAD
     // 서버에 회원가입 요청 전송
     return fetch(`${BASE_URL}/users/signup`, {
       method: "POST",
@@ -172,8 +208,26 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => {
         console.error("회원 가입 오류:", error);
         return { success: false, message: error.message }; // 실패 객체 반환
+=======
+    try {
+      const response = await fetch(`${BASE_URL}/users/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+>>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
       });
-  }
+      if (response.ok) {
+        return { success: true, data: await response.json() };
+      } else {
+        throw new Error("회원가입 실패");
+      }
+    } catch (error) {
+      console.error("회원 가입 오류:", error);
+      return { success: false, message: error.message };
+    }
+  };
   // 이메일 중복 검사 요청
   function checkEmailAvailability(email) {
     return fetch(
@@ -257,16 +311,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 회원가입 버튼에 클릭 이벤트 바인딩
   formElements.signUpButton.addEventListener("click", async () => {
+    // 화살표 함수와 async 사용
     const signupResult = await registerUser(
       formElements.email.value,
       formElements.password.value,
       formElements.nickname.value,
       uploadedFileName
     );
-    console.log(signupResult);
     if (signupResult.success) {
       alert("회원 가입이 완료되었습니다.");
-      window.location.href = "/"; // 회원가입 성공 후 로그인 페이지로
+      window.location.href = "/"; // 회원가입 성공 후 로그인 페이지로 이동
     } else {
       alert("회원가입 실패: " + signupResult.message);
     }

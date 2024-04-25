@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 document.addEventListener("DOMContentLoaded", function () {
+=======
+document.addEventListener("DOMContentLoaded", () => {
+  // 함수를 화살표 함수로 변경
+>>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
   const token = localStorage.getItem("auth_token");
   const profilePicture = document.querySelector(".profile-picture");
   const user_profileImage = localStorage.getItem("user_profileImage");
@@ -14,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const fileLabel = document.getElementById("post-image-label");
 
   // 파일 선택 시 서버에 업로드
-  fileInput.addEventListener("change", function (event) {
+  fileInput.addEventListener("change", (event) => {
+    // 함수를 화살표 함수로 변경
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
@@ -82,8 +88,8 @@ function submitPost() {
   const imageName = document.getElementById("post-image-label").textContent;
 
   const postData = {
-    title: title,
-    content: content,
+    title,
+    content,
     images: imageName ? [imageName] : [],
   };
 
