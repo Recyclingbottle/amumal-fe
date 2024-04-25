@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 document.addEventListener("DOMContentLoaded", function () {
   // 이전 페이지로 돌아가기 위한 이미지에 클릭 이벤트 연결
-=======
-document.addEventListener("DOMContentLoaded", () => {
-  // 화살표 함수로 변경
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
   const navigateBackImg = document.getElementById("navigate-back-img");
   navigateBackImg.addEventListener("click", () => {
     // 화살표 함수로 변경
@@ -68,20 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return "*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
     }
     try {
-<<<<<<< HEAD
       const message = await checkEmailAvailability(email); // 비동기 결과를 기다림
 
       return message; // 결과 메시지 반환
-=======
-      const response = await fetch(
-        `${BASE_URL}/users/check-email?email=${encodeURIComponent(email)}`,
-        {
-          method: "GET",
-        }
-      );
-      const data = await response.json();
-      return data.message;
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
     } catch (error) {
       console.error("Validation error:", error);
       return "*이메일 검사 중 문제가 발생했습니다.";
@@ -182,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
       profile_image: profileImagePath,
     };
 
-<<<<<<< HEAD
     // 서버에 회원가입 요청 전송
     return fetch(`${BASE_URL}/users/signup`, {
       method: "POST",
@@ -208,24 +191,11 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => {
         console.error("회원 가입 오류:", error);
         return { success: false, message: error.message }; // 실패 객체 반환
-=======
-    try {
-      const response = await fetch(`${BASE_URL}/users/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
       });
-      if (response.ok) {
-        return { success: true, data: await response.json() };
-      } else {
-        throw new Error("회원가입 실패");
-      }
-    } catch (error) {
-      console.error("회원 가입 오류:", error);
-      return { success: false, message: error.message };
+    if (response.ok) {
+      return { success: true, data: await response.json() };
+    } else {
+      throw new Error("회원가입 실패");
     }
   };
   // 이메일 중복 검사 요청

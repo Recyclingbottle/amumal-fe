@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 document.addEventListener("DOMContentLoaded", function () {
-=======
-document.addEventListener("DOMContentLoaded", () => {
   // 화살표 함수로 변경
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
   const token = localStorage.getItem("auth_token");
   const profileImg = document.getElementById("profileImg");
   const helperText = document.getElementById("helper-text");
@@ -108,22 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-<<<<<<< HEAD
-    fetch(`${BASE_URL}/users/check-nickname?nickname=${newNickname}`, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "ngrok-skip-browser-warning": "69420",
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return response.json().then((data) => {
-=======
     fetch(
       `http://localhost:3000/users/check-nickname?nickname=${newNickname}`,
       {
@@ -137,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
             helperText.textContent = data.message;
             updateButton.disabled = false;
           } else {
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
             throw new Error(data.message);
           }
         })
@@ -172,33 +151,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function deleteUserAccount() {
-<<<<<<< HEAD
-    const userId = localStorage.getItem("user_id"); // 사용자 ID 가져오기
-    fetch(`${BASE_URL}/users/${userId}`, {
-      method: "DELETE",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "ngrok-skip-browser-warning": "69420",
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
-=======
     const userId = localStorage.getItem("user_id");
     fetch(`http://localhost:3000/users/${userId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
       },
     })
       .then((response) => {
         if (response.ok) {
           alert("회원 탈퇴가 완료되었습니다.");
-<<<<<<< HEAD
           localStorage.clear(); // 로컬 스토리지 클리어
-=======
-          localStorage.clear();
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
           window.location.href = "/";
         } else {
           alert("회원 탈퇴에 실패했습니다.");

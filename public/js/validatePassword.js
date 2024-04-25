@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 document.addEventListener("DOMContentLoaded", function () {
-=======
-document.addEventListener("DOMContentLoaded", () => {
-  // 화살표 함수로 변경
->>>>>>> fc05ae16fe7acfbc6c62003b4758a68466c195de
   const passwordInput = document.getElementById("password");
   const confirmPasswordInput = document.getElementById("confirm-password");
   const passwordHelper = document.getElementById("password-helper");
