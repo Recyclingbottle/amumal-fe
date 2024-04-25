@@ -1,3 +1,5 @@
+const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
+
 document.addEventListener("DOMContentLoaded", function () {
   const passwordInput = document.getElementById("password");
   const confirmPasswordInput = document.getElementById("confirm-password");
@@ -66,10 +68,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const newPassword = passwordInput.value;
 
-    fetch(`http://localhost:3000/users/${userId}/password`, {
+    fetch(`${BASE_URL}/users/${userId}/password`, {
       method: "PATCH",
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
         "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ new_password: newPassword }),

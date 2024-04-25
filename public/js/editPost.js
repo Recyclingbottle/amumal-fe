@@ -1,8 +1,10 @@
+const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
+
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("auth_token");
   const profilePicture = document.querySelector(".profile-picture");
   const user_profileImage = localStorage.getItem("user_profileImage");
-  profilePicture.src = `http://localhost:3000/images/profile/${user_profileImage}`;
+  profilePicture.src = `${BASE_URL}/images/profile/${user_profileImage}`;
 
   const pathArray = window.location.pathname.split("/");
   const postId = pathArray[pathArray.length - 2];
@@ -18,9 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const formData = new FormData();
       formData.append("image", file);
 
-      fetch(`http://localhost:3000/upload/post`, {
+      fetch(`${BASE_URL}/upload/post`, {
         method: "POST",
         headers: {
+          "Access-Control-Allow-Origin": "*",
+          "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+          Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: formData,
@@ -42,9 +48,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 게시글 정보 가져오기
-  fetch(`http://localhost:3000/posts/${postId}`, {
+  fetch(`${BASE_URL}/posts/${postId}`, {
     method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "ngrok-skip-browser-warning": "69420",
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then((response) => response.json())
     .then((post) => {
@@ -75,10 +87,13 @@ function submitPost() {
     images: imageName ? [imageName] : [],
   };
 
-  fetch(`http://localhost:3000/posts/${postId}`, {
+  fetch(`${BASE_URL}/posts/${postId}`, {
     method: "PATCH",
     headers: {
+      "Access-Control-Allow-Origin": "*",
+      "ngrok-skip-browser-warning": "69420",
       "Content-Type": "application/json",
+      Accept: "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(postData),

@@ -1,3 +1,5 @@
+const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
+
 document.addEventListener("DOMContentLoaded", function () {
   // 이전 페이지로 돌아가기 위한 이미지에 클릭 이벤트 연결
   const navigateBackImg = document.getElementById("navigate-back-img");
@@ -59,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     try {
       const message = await checkEmailAvailability(email); // 비동기 결과를 기다림
+
       return message; // 결과 메시지 반환
     } catch (error) {
       console.error("Validation error:", error);
@@ -111,7 +114,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const formData = new FormData();
     formData.append("image", file);
 
-    return fetch("http://localhost:3000/upload/profile", {
+    return fetch(`${BASE_URL}/upload/profile`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       method: "POST",
       body: formData,
     })
@@ -139,14 +148,18 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // 서버에 회원가입 요청 전송
-    return fetch("http://localhost:3000/users/signup", {
+    return fetch(`${BASE_URL}/users/signup`, {
       method: "POST",
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify(userData),
     })
       .then((response) => {
+        console.log(response);
         if (response.ok) {
           return response.json(); // 응답이 성공적이면 JSON 데이터 반환
         } else {
@@ -164,11 +177,20 @@ document.addEventListener("DOMContentLoaded", function () {
   // 이메일 중복 검사 요청
   function checkEmailAvailability(email) {
     return fetch(
-      `http://localhost:3000/users/check-email?email=${encodeURIComponent(
-        email
-      )}`
+      `${BASE_URL}/users/check-email?email=${encodeURIComponent(email)}`,
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
     )
-      .then((response) => response.json()) // 상태 코드와 무관하게 응답을 json으로 파싱
+      .then((response) => {
+        // console.log("Response:", response.json()); // response 로그 출력
+        return response.json();
+      })
       .then((data) => {
         return data.message; // 서버로부터 받은 메시지 반환
       })
@@ -181,9 +203,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // 닉네임 중복 검사 요청
   function checkNicknameAvailability(nickname) {
     return fetch(
-      `http://localhost:3000/users/check-nickname?nickname=${encodeURIComponent(
+      `${BASE_URL}/users/check-nickname?nickname=${encodeURIComponent(
         nickname
-      )}`
+      )}`,
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
     )
       .then((response) => response.json()) // 상태 코드와 무관하게 응답을 json으로 파싱
       .then((data) => {

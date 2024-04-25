@@ -1,3 +1,5 @@
+const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
+
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("auth_token");
   const profileImg = document.getElementById("profileImg");
@@ -7,11 +9,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const userId = localStorage.getItem("user_id"); // 사용자 ID를 로컬스토리지에서 가져옴
   const user_profileImage = localStorage.getItem("user_profileImage");
   const userEmail = localStorage.getItem("user_email");
+  const user_nickname = localStorage.getItem("user_nickname");
   document.querySelector("#email").innerText = userEmail;
-
+  document.querySelector("#nickname").value = user_nickname;
   const bannerprofileimg = document.querySelector(".profile-picture");
-  bannerprofileimg.src = `http://localhost:3000/images/profile/${user_profileImage}`;
-  profileImg.src = `http://localhost:3000/images/profile/${user_profileImage}`;
+  bannerprofileimg.src = `${BASE_URL}/images/profile/${user_profileImage}`;
+  profileImg.src = `${BASE_URL}/images/profile/${user_profileImage}`;
   nicknameInput.addEventListener("input", validateNickname);
 
   profileImg.addEventListener("click", function () {
@@ -34,9 +37,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const formData = new FormData();
     formData.append("image", file);
 
-    fetch("http://localhost:3000/upload/profile", {
+    fetch(`${BASE_URL}/upload/profile`, {
       method: "POST",
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: formData,
@@ -44,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         if (data.filename) {
-          profileImg.src = `http://localhost:3000/images/profile/${data.filename}`;
+          profileImg.src = `${BASE_URL}/images/profile/${data.filename}`;
           localStorage.setItem("user_profileImage", data.filename); // 업로드된 파일 이름 저장
         }
       })
@@ -56,10 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const profileImage = localStorage.getItem("user_profileImage");
     const updatedNickname = nicknameInput.value;
 
-    fetch(`http://localhost:3000/users/${userId}`, {
+    fetch(`${BASE_URL}/users/${userId}`, {
       method: "PATCH",
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
         "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
@@ -70,7 +80,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => {
         if (response.ok) {
           alert("프로필이 성공적으로 업데이트되었습니다.");
-          window.location.href = "/posts";
+          localStorage.clear();
+          window.location.href = "/";
         } else {
           alert("프로필 업데이트에 실패했습니다.");
         }
@@ -89,12 +100,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    fetch(
-      `http://localhost:3000/users/check-nickname?nickname=${newNickname}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
+    fetch(`${BASE_URL}/users/check-nickname?nickname=${newNickname}`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -136,9 +150,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function deleteUserAccount() {
     const userId = localStorage.getItem("user_id"); // 사용자 ID 가져오기
-    fetch(`http://localhost:3000/users/${userId}`, {
+    fetch(`${BASE_URL}/users/${userId}`, {
       method: "DELETE",
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
       },
     })
@@ -146,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.ok) {
           alert("회원 탈퇴가 완료되었습니다.");
           localStorage.clear(); // 로컬 스토리지 클리어
-          window.location.href = "/"; // 홈으로 리다이렉트
+          window.location.href = "/";
         } else {
           alert("회원 탈퇴에 실패했습니다.");
         }

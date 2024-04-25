@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 document.addEventListener("DOMContentLoaded", function () {
   const profilePicture = document.querySelector(".profile-picture");
@@ -37,6 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(`${BASE_URL}/posts`, {
       method: "GET", // HTTP GET 요청
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Accept: "application/json",
         // Bearer 토큰을 사용한 인증 헤더
         Authorization: `Bearer ${auth_token}`,
       },

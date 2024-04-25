@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
 
 function validateLoginForm() {
   let email = document.getElementById("email").value;
@@ -26,7 +26,10 @@ document.getElementById("login-button").addEventListener("click", function () {
     fetch(`${BASE_URL}/users/login`, {
       method: "POST",
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({ email, password }),
     })

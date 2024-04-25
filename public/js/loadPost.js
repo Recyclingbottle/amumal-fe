@@ -1,9 +1,11 @@
+const BASE_URL = "https://fb53-180-70-118-11.ngrok-free.app";
+
 document.addEventListener("DOMContentLoaded", function () {
   // 초기 설정: 토큰 및 사용자 프로필 이미지 불러오기
   const token = localStorage.getItem("auth_token");
   const login_profile = localStorage.getItem("user_profileImage");
   const profilePicture = document.querySelector(".profile-picture");
-  profilePicture.src = `http://localhost:3000/images/profile/${login_profile}`;
+  profilePicture.src = `${BASE_URL}/images/profile/${login_profile}`;
   const commentTextarea = document.querySelector(".comment-textarea");
   const commentButton = document.querySelector(".comments-register-button");
 
@@ -24,10 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Updating comment with ID:", commentId); // 로그 추가하여 commentId 확인
       const updatedContent = commentTextarea.value.trim();
       if (updatedContent) {
-        fetch(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
+        fetch(`${BASE_URL}/posts/${postId}/comments/${commentId}`, {
           method: "PATCH",
           headers: {
+            "Access-Control-Allow-Origin": "*",
+            "ngrok-skip-browser-warning": "69420",
             "Content-Type": "application/json",
+            Accept: "application/json",
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ content: updatedContent }),
@@ -75,9 +80,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 서버에서 게시글 상세 정보를 불러오는 함수
   function fetchPostDetails(postId) {
-    fetch(`http://localhost:3000/posts/${postId}`, {
+    fetch(`${BASE_URL}/posts/${postId}`, {
       method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((post) => {
@@ -101,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".post-title").textContent = post.title;
     document.querySelector(
       ".post-profile-picture"
-    ).src = `http://localhost:3000/images/profile/${post.author.profileImage_path}`;
+    ).src = `${BASE_URL}/images/profile/${post.author.profileImage_path}`;
     document.querySelector(".author-name").textContent = post.author.nickname;
     document.querySelector(".post-date").textContent = post.date;
     document.querySelector(".post-text").innerHTML = post.content;
@@ -114,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (post.post_image) {
       const imgBox = document.querySelector(".img-box img");
-      imgBox.src = `http://localhost:3000/images/posts/${post.post_image}`;
+      imgBox.src = `${BASE_URL}/images/posts/${post.post_image}`;
       imgBox.alt = "게시글 이미지";
     }
   }
@@ -126,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .map(
         (comment) => `
     <div class="comment-container">
-      <img src="http://localhost:3000/images/profile/${comment.author.profileImage}" alt="댓글 작성자 프로필 사진" class="comment-profile-picture">
+      <img src="${BASE_URL}/images/profile/${comment.author.profileImage}" alt="댓글 작성자 프로필 사진" class="comment-profile-picture">
       <div class="comment-content">
         <div class="comment-top-row">
           <span class="comment-author-name">${comment.author.nickname}</span>
@@ -166,10 +177,13 @@ function setupCommentPosting(postId, token) {
   commentButton.addEventListener("click", function () {
     const commentContent = commentTextarea.value.trim();
     if (commentContent) {
-      fetch(`http://localhost:3000/posts/${postId}/comments`, {
+      fetch(`${BASE_URL}/posts/${postId}/comments`, {
         method: "POST",
         headers: {
+          "Access-Control-Allow-Origin": "*",
+          "ngrok-skip-browser-warning": "69420",
           "Content-Type": "application/json",
+          Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ content: commentContent }),
@@ -206,9 +220,15 @@ function setupPostDeletionModal(postId, token) {
     );
 
   postDeletionModal.querySelector(".confirm").addEventListener("click", () => {
-    fetch(`http://localhost:3000/posts/${postId}`, {
+    fetch(`${BASE_URL}/posts/${postId}`, {
       method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then((response) => {
       response.ok
         ? (window.location.href = "/posts")
@@ -236,9 +256,15 @@ function setupCommentDeletionModal() {
     .addEventListener("click", function () {
       const commentId = this.dataset.commentId;
       const postId = window.location.pathname.split("/").pop();
-      fetch(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
+      fetch(`${BASE_URL}/posts/${postId}/comments/${commentId}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "ngrok-skip-browser-warning": "69420",
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }).then((response) => {
         response.ok ? location.reload() : alert("댓글을 삭제할 수 없습니다.");
       });
